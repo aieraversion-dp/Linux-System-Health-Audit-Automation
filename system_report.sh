@@ -24,3 +24,12 @@ who
 echo ""
 echo "===== TOP CPU PROCESSES ====="
 ps -eo pid,user,comm,%cpu,%mem --sort=-%cpu | head
+
+#This will create an alert when disk usage is greater than 80% 
+DISK_USAGE=$(df / | awk 'NR==2 {print $5}' | tr -d '%')
+
+if [ "$DISK_USAGE" -gt 80 ]; then
+	    echo "WARNING: Disk usage is ${DISK_USAGE}%"
+    else
+	        echo "Disk usage OK: ${DISK_USAGE}%"
+fi
